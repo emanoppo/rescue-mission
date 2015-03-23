@@ -1,0 +1,23 @@
+<div class="row">
+  <%- if @answer.errors.present? -%>
+    <div class="large-12 alert-box alert" data-alert>
+      <ul>
+        <%- @answer.errors.full_messages.each do |error| -%>
+          <li><%= error %></li>
+        <%- end -%>
+      </ul>
+    </div>
+  <%- end -%>
+
+  <div class="large-12">
+    <h1>Submit an Answer</h1>
+
+    <%= form_for @answer do |f| %>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </br></br>
+
+      <%= f.submit "Submit Answer" %>
+    <%- end -%>
+  </div>
+</div>

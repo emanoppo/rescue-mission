@@ -1,0 +1,9 @@
+<h1>Questions</h1>
+
+<a href="/questions/new">Submit a New Question</a>
+
+<ul>
+  <% @questions.each do |question| %>
+    <li><a href=<%= question_path(question.id) %>><%= question.title %></a> (<%= question.created_at %>)</li>
+  <% end %>
+</ul>
