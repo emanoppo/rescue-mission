@@ -9,8 +9,12 @@ Rails.application.routes.draw do
 
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
-  resources :questions, only: [:index, :new, :create, :destroy, :edit, :update, :show]
-  resources :answers, only: [:new, :create]
+  resources :questions, only: [:new, :create, :destroy, :edit, :update]
+
+  resources :questions, only: [:index, :show] do
+    resources :answers, only: [:index, :new, :create]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

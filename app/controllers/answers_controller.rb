@@ -4,10 +4,13 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.new(answer_params)
+    new_params = answer_params
+    new_params[:user_id] = current_user.id
+    new_params[:question_id] = params[:question_id]
+    @answer = Answer.new(new_params)
     if @answer.save
       flash[:notice] = 'Answer added.'
-      redirect_to question_path(question_id: params[:question_id])
+      redirect_to question_path(@answer.question_id)
     else
       render :new
     end
@@ -15,6 +18,6 @@ class AnswersController < ApplicationController
 
   protected
   def answer_params
-    params.require(:question).permit(:body)
+    params.require(:answer).permit(:body)
   end
 end
