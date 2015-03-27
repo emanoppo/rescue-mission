@@ -29,7 +29,13 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @answers = Answer.where(question_id: params[:id])
+    if !@question.answer_id.nil?
+      @answers = Answer.order(created_at: :ASC).where(question_id: params[:id]).where.not(id: @question.answer_id)
+      @best_answer = Answer.find(@question.answer_id)
+    else
+      @answers = Answer.order(created_at: :ASC).where(question_id: params[:id])
+    end
+    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
   end
 
   def edit
@@ -43,6 +49,9 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     new_params = question_params
+    if !params[:answer_id].nil?
+      new_params[:answer_id] = params[:answer_id]
+    end
     new_params[:user_id] = current_user.id
     if @question.update(new_params)
       flash[:notice] = 'Question edited.'
@@ -54,6 +63,6 @@ class QuestionsController < ApplicationController
 
   protected
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :answer_id)
   end
 end

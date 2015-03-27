@@ -7,6 +7,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'pry-rails'
 gem 'dotenv-rails'
+gem 'redcarpet'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
